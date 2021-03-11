@@ -1,7 +1,4 @@
 # CxWorkshop
 
-##test
-
-Repository for Checkmarx Workshop (thanks James!)
-This branch contains deliberately vulnerable code to demonstrate the product.
-
+This is custom code I wrote to demonstrate vulns and Checkmarx's ability to find dataflow...
+It used the ADO plugin to generate pipeline code to perform both SAST and SCA.
