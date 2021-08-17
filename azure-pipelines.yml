@@ -12,17 +12,15 @@ pool:
 
 steps:
 
-- task: Application security testing@2020
+- task: Application security testing@2021
   inputs:
     projectName: '$(Build.Repository.Name)'
     enableProxy: false
     enableSastScan: true
     CheckmarxService: 'Checkmarx SAST'
     preset: 'High and Medium and Low'
-    fullTeamName: 'CxServer'
+    fullTeamName: '/CxServer'
     incScan: false
     forceScan: true
-    enableDependencyScan: true
-    dependencyServerURL: 'Checkmarx SCA'
-    dependencyWebAppURL: 'https://sca.scacheckmarx.com'
-    dependencyTenant: 'sca-champions'
+    enableDependencyScan: false
+
