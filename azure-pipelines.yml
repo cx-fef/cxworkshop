@@ -19,7 +19,7 @@ steps:
     enableSastScan: true
     CheckmarxService: 'Checkmarx SAST'
     preset: 'High and Medium and Low'
-    fullTeamName: '/CxServer/SP/Partners/NSecurity'
+    fullTeamName: 'CxServer'
     incScan: false
     forceScan: true
     enableDependencyScan: true
