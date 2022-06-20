@@ -14,47 +14,62 @@ public class Vulns {
 
 	// SQLi vulnerability
 	public static void input (DataSource pool) {
-		String email = request.getParameter ("email");
-		String password = request.getParameter ("password");
+		try {
 
-		String sql = "select * from users where (email ='" + email + "' and password'" + password + "')";
-		Connection connection = pool.getConnection();
-		Statement statement = connection.createStatement();
-		result = statement.executeQuery(sql);
+			String email = request.getParameter ("email");
+			String password = request.getParameter ("password");
+			Connection connection = pool.getConnection();
+			String sql = "";
+			
 		
-		/*  this is the solution
-		//String sql = "select * from users where (email ='" + email + "' and password'" + password + "')";
-		String sql = "select * from users where email = ? and password = ? ";
+			// vulnerable sqli
+/*	
+			sql = "select * from users where (email = '" + email + "' and password = '" + password + "')";
+			Statement statement = connection.createStatement();
+			result = statement.executeQuery(sql);
+*/
+			// clean sqli
 
-
-		Connection connection = pool.getConnection();
-		//Statement statement = connection.createStatement();
-		PreparedStatement preparedStatement = connection.prepareStatment(sql);
-
-		//Result result = statement.executeQuery(sql);
-		preparedStatement.setString (1, email);
-		preparedStatement.setString (2, password);
-
-		ResultSet result = preparedStatement.executeQuery();
-		*/
+			sql = "select * from users where email = ? and password = ? ";
+			PreparedStatement ps = connection.prepareStatement(sql);
+			ps.setString(1, email);
+			ps.setString(2, password);
+			result = ps.executeQuery();
+			
+			if (result.next()) {
+				loggedIn = true;
+				doGet(result,req,response);
+			} else
+				out.println("No results");
 		
-		if (result.next()) {
-			loggedIn = true;
-			doGet(result,req,response);
-		} else {
-			out.println("No results");
+		}
+		catch(SQLException ex)	{
+			out.println("Overly broad Exception " + ex.Message());
 		}
 	}
 
 	// XSS vulnerability	
 	protected void doGet(Result res, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     
-    		response.setContentType("text/html;charset=UTF-8");
+    		try {
+			response.setContentType("text/html;charset=UTF-8");
+			response.setHeader("Strict-Transport-Security", "max-age=31536000; includeSubDomains");
       
-  		PrintWriter out = response.getWriter();
-  		String loc = request.getParameter("location");
-		loc+=res.getString("GEO_LOC");
-  
-  		out.println("<h1> Location: " + loc + "<h1>");
+  			PrintWriter out = response.getWriter();
+  			String loc = request.getParameter("location");
+			loc+=res.getString("GEO_LOC");
+			
+			// clean xss
+			/*
+ 			String escapedLocation = HtmlEscapers.htmlEscaper().escape(loc); 
+  			out.println("<h1> Location: " + escapedLocation + "<h1>");
+			*/
+
+			//not clean xss
+			out.println("<h1> Location: " + loc + "<h1>");
+		}
+		catch(IOException ex)	{
+			out.println("Error caught by overly broad exception handler: " + ex.Message());
+		}
 	}
 }
