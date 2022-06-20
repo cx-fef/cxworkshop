@@ -5,22 +5,22 @@
 # https://aka.ms/yaml
 
 trigger:
-- master
+# - master
 
 pool:
-  vmImage: ubuntu-latest
+#  vmImage: ubuntu-latest
 
 steps:
 
-- task: Application security testing@2021
-  inputs:
-    projectName: '$(Build.Repository.Name)'
-    enableProxy: false
-    enableSastScan: true
-    CheckmarxService: 'Checkmarx SAST'
-    preset: 'High and Medium and Low'
-    fullTeamName: '/CxServer'
-    incScan: false
-    forceScan: true
-    enableDependencyScan: false
+#- task: Application security testing@2021
+#  inputs:
+#    projectName: '$(Build.Repository.Name)'
+#    enableProxy: false
+#    enableSastScan: true
+#    CheckmarxService: 'Checkmarx SAST'
+#    preset: 'High and Medium and Low'
+#    fullTeamName: '/CxServer'
+#    incScan: false
+#    forceScan: true
+#    enableDependencyScan: false
 
