@@ -62,13 +62,13 @@ public class Vulns {
 			loc+=res.getString("GEO_LOC");
 			
 			// clean xss
-			
+			/*
  			String escapedLocation = HtmlEscapers.htmlEscaper().escape(loc); 
   			out.println("<h1> Location: " + escapedLocation + "<h1>");
-			
+			*/
 
 			//not clean xss
-			//out.println("<h1> Location: " + loc + "<h1>");
+			out.println("<h1> Location: " + loc + "<h1>");
 		}
 		catch(IOException ex)	{
 			out.println("Error caught by overly broad exception handler: " + ex.Message());
