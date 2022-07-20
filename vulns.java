@@ -4,6 +4,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.io.PrintWriter;
+import com.google.common.html.HtmlEscapers;
+
 
 public class Vulns {
 
