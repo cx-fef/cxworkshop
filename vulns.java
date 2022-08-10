@@ -30,6 +30,7 @@ public class Vulns {
 			Statement statement = connection.createStatement();
 			result = statement.executeQuery(sql);
 
+
 /*
 			// clean sqli
 			sql = "select * from users where email = ? and password = ? ";
