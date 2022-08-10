@@ -25,7 +25,6 @@ public class Vulns {
 			
 		
 			// vulnerable sqli
-
 			sql = "select * from users where (email = '" + email + "' and password = '" + password + "')";
 			Statement statement = connection.createStatement();
 			result = statement.executeQuery(sql);
