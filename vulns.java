@@ -53,7 +53,7 @@ public class Vulns {
 	protected string cleanXSS(string taintedString)	{
 		string cleanString = "cleanString";
 		try	{
-			cleanString = taintedString;
+			cleanString = encode.HTMLEncode(taintedString);
 		}
 		catch(Exception ex)	{
 			console.Message(ex.Message.String());
