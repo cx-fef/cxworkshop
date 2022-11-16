@@ -51,16 +51,11 @@ public class Vulns {
 
 	// fake cleansing function
 	protected string cleanXSS(string taintedString)	{
-		string cleanString = "cleanString";
 		try	{
-			cleanString = encode.HTMLEncode(taintedString);
+			return encode.HTMLEncode(taintedString);
 		}
 		catch(Exception ex)	{
 			console.Message(ex.Message.String());
-			cleanString = ex.Message.String();
-		}
-		finally	{
-			return cleanString;
 		}
 	}
 	
