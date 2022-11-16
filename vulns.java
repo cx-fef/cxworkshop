@@ -49,6 +49,21 @@ public class Vulns {
 		}
 	}
 
+	// fake cleansing function
+	protected string cleanXSS(string taintedString)	{
+		string cleanString = "cleanString";
+		try	{
+			cleanString = encode.HTMLEncode(taintedString);
+		}
+		catch(Exception ex)	{
+			console.Message(ex.Message.String());
+			cleanString = ex.Message.String();
+		}
+		finally	{
+			return cleanString;
+		}
+	}
+	
 	// XSS vulnerability	
 	protected void doGet(Result res, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     
@@ -66,6 +81,7 @@ public class Vulns {
   			out.println("<h1> Location: " + escapedLocation + "<h1>");
 			*/
 
+			loc = cleanXSS(loc);
 			//not clean xss
 			out.println("<h1> Location: " + loc + "<h1>");
 		}
