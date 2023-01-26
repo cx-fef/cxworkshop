@@ -28,7 +28,9 @@ public class Vulns {
 			sql = "select * from users where (email = '" + email + "' and password = '" + password + "')";
 			Statement statement = connection.createStatement();
 			result = statement.executeQuery(sql);
+
 /*
+			// notes to cause a build
 			// clean sqli
 			sql = "select * from users where email = ? and password = ? ";
 			PreparedStatement ps = connection.prepareStatement(sql);
