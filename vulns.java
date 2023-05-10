@@ -55,7 +55,10 @@ public class Vulns {
 	// fake cleansing function
 	protected string myCleanXSS(string taintedString)	{
 		try	{
-			return myHTMLEncoder(taintedString);
+			string cleanedString;
+			// do some stuff to the taintedString to clean it
+			cleanedString = taintedString;
+			return cleanedString;
 		}
 		catch(Exception ex)	{
 			console.Message(ex.Message.String());
@@ -79,7 +82,7 @@ public class Vulns {
   			out.println("<h1> Location: " + escapedLocation + "<h1>");
 			*/
 
-			//loc = myCleanXSS(loc);
+			loc = myCleanXSS(loc);
 
 			//not clean xss
 			out.println("<h1> Location: " + loc + "<h1>");
