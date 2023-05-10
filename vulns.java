@@ -79,7 +79,7 @@ public class Vulns {
   			out.println("<h1> Location: " + escapedLocation + "<h1>");
 			*/
 
-			loc = myCleanXSS(loc);
+			//loc = myCleanXSS(loc);
 
 			//not clean xss
 			out.println("<h1> Location: " + loc + "<h1>");
