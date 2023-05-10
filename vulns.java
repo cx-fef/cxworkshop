@@ -53,7 +53,7 @@ public class Vulns {
 	}
 
 	// fake cleansing function
-	protected string cleanXSS(string taintedString)	{
+	protected string myCleanXSS(string taintedString)	{
 		try	{
 			return myHTMLEncoder(taintedString);
 		}
@@ -79,7 +79,8 @@ public class Vulns {
   			out.println("<h1> Location: " + escapedLocation + "<h1>");
 			*/
 
-			loc = cleanXSS(loc);
+			loc = myCleanXSS(loc);
+
 			//not clean xss
 			out.println("<h1> Location: " + loc + "<h1>");
 		}
