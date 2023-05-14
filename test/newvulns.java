@@ -43,6 +43,7 @@ public class SendMessage extends HttpServlet {
             String msg=request.getParameter("msg");
             String sender=request.getParameter("sender");
             if(con!=null && !con.isClosed() && request.getParameter("send")!=null)  {
+                // the work below between the two choices is designed to demonstrate broken code being fixed...and recognized by checkmarx
                 //PreparedStatement to Prevent SQL Injection attack:   
                 /*    
                 PreparedStatement pstmt=con.prepareStatement("INSERT into UserMessages(recipient, sender, subject, msg) values (?,?,?,?)");
