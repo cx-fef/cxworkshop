@@ -14,39 +14,24 @@ jobs:
     # Runs the Checkmarx Scan leveraging the latest version of CxFlow - REFER to Action README for list of inputs
       - name: Checkmarx CxFlow Action
         uses: checkmarx-ts/checkmarx-cxflow-github-action@v1.9
-      #environment variable used for cx-flow
-        env:
-          JIRA_FIELDS_0_JIRA_DEFAULT_VALUE : APPSEC-2371
-          JIRA_FIELDS_0_JIRA_FIELD_NAME : "Epic Link"
-          JIRA_FIELDS_0_JIRA_FIELD_TYPE : text
-          JIRA_FIELDS_0_TYPE : static
         with:
           project: ${{ github.repository }}-PR
-          team: ${{ secrets.CHECKMARX_TEAMS }}
-          checkmarx_url: ${{ secrets.CHECKMARX_URL }}
-          checkmarx_username: ${{ secrets.CHECKMARX_USERNAME }}
-          checkmarx_password: ${{ secrets.CHECKMARX_PASSWORD }}
-          checkmarx_client_secret: ${{ secrets.CHECKMARX_CLIENT_SECRET }}
-          scanners: sca
-          break_build: true
-          bug_tracker: jira
-          sca_api_url: ${{ secrets.SCA_API_URL }}
-          sca_app_url: ${{ secrets.SCA_APP_URL }}
-          sca_access_control_url: ${{ secrets.SCA_ACCESS_CONTROL_URL }}
-          sca_tenant: ${{  secrets.SCA_TENANT }}
-          sca_username: ${{ secrets.SCA_USERNAME }}
-          sca_password: ${{ secrets.SCA_PASSWORD }}
-          jira_url : ${{ secrets.JIRA_URL }}
-          jira_username : ${{ secrets.JIRA_USERNAME }}
-          jira_token : ${{ secrets.JIRA_TOKEN }}
-          jira_project : ${{ secrets.JIRA_PROJECT }}
-          jira_issue_type : 'Bug'
-          jira_open_transition : 'In Progress'
-          jira_close_transition : 'Done'
-          jira_open_status : 'Selected for Development,In Progress'
-          jira_closed_status : 'Done'
+          team: /CxServer
+          checkmarx_url: http://ec2amaz-exteng
+          checkmarx_username: mfeferman
+          checkmarx_password: Checkmarx#1
+          checkmarx_client_secret: 014DF517-39D1-4453-B7B3-9930C563627C
+          scanners: sast
+          break_build: false
+          bug_tracker: github
+          # sca_api_url: ${{ secrets.SCA_API_URL }}
+          # sca_app_url: ${{ secrets.SCA_APP_URL }}
+          # sca_access_control_url: ${{ secrets.SCA_ACCESS_CONTROL_URL }}
+          # sca_tenant: ${{  secrets.SCA_TENANT }}
+          # sca_username: ${{ secrets.SCA_USERNAME }}
+          # sca_password: ${{ secrets.SCA_PASSWORD }}
           params: '--namespace=${{ github.repository_owner }} --repo-name=${{ github.event.repository.name }} --branch=${{ github.ref }} --merge-id=${{ github.event.number }} --logging.level.com.checkmarx.*=DEBUG --cx-flow.filterSeverity --cx-flow.filterCategory'
       - name: Upload SARIF file
         uses: github/codeql-action/upload-sarif@v2
         with:
-          sarif_file: results.sarif
+          sarif_file: cx.sarif
