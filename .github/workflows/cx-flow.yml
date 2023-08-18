@@ -17,8 +17,8 @@ jobs:
         with:
           project: ${{ github.repository }}-PR
           team: /CxServer
-          checkmarx_url: http://ec2amaz-exteng
-          checkmarx_username: mfeferman
+          checkmarx_url: https://cxprivatecloud.checkmarx.net
+          checkmarx_username: mark.feferman@checkmarx.com
           checkmarx_password: Checkmarx#1
           checkmarx_client_secret: 014DF517-39D1-4453-B7B3-9930C563627C
           scanners: sast
