@@ -23,7 +23,7 @@ jobs:
           checkmarx_client_secret: 014DF517-39D1-4453-B7B3-9930C563627C
           scanners: sast
           break_build: false
-          bug_tracker: github
+          bug_tracker: GitHub
           # sca_api_url: ${{ secrets.SCA_API_URL }}
           # sca_app_url: ${{ secrets.SCA_APP_URL }}
           # sca_access_control_url: ${{ secrets.SCA_ACCESS_CONTROL_URL }}
