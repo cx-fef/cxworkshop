@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/c#heckout@v2
+        uses: actions/checkout@v2
     # Runs the Checkmarx Scan leveraging the latest version of CxFlow - REFER to Action README for list of inputs
       - name: Checkmarx CxFlow Action
         uses: checkmarx-ts/checkmarx-cxflow-github-action@v1.9
