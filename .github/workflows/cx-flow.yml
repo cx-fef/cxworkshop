@@ -29,7 +29,7 @@ jobs:
           checkmarx_client_secret: ${{ secrets.CXSAST_CLIENT_SECRET }}
           scanners: sast,sca
           break_build: false
-          bug_tracker: GitHub
+          bug_tracker: Sarif
           sca_api_url: https://api-sca.checkmarx.net
           sca_app_url: https://sca.checkmarx.net
           sca_access_control_url: https://platform.checkmarx.net
