@@ -24,7 +24,7 @@ jobs:
           project: ${{ github.repository }}-PR
           team: /CxServer/SP/Partners/NSecurity
           checkmarx_url: https://cxprivatecloud.checkmarx.net
-          checkmarx_username: mark.feferman@checkmarx.com
+          checkmarx_username: ${{ secrets.CXSAST_USER }}
           checkmarx_password: ${{ secrets.CXSAST_PWD }}
           checkmarx_client_secret: ${{ secrets.CXSAST_CLIENT_SECRET }}
           scanners: sast,sca
@@ -33,8 +33,8 @@ jobs:
           sca_api_url: https://api-sca.checkmarx.net
           sca_app_url: https://sca.checkmarx.net
           sca_access_control_url: https://platform.checkmarx.net
-          sca_tenant: sca-champions
-          sca_username: afeferman
+          sca_tenant: ${{ secrets.CXSCA_TENANT }}
+          sca_username: ${{ secrets.CXSCA_USER }}
           sca_password: ${{ secrets.CXSCA_PWD }}
           params: '--namespace=${{ github.repository_owner }} --repo-name=${{ github.event.repository.name }} --branch=${{ github.ref }} --merge-id=${{ github.event.number }} --logging.level.com.checkmarx.*=DEBUG --cx-flow.filterSeverity --cx-flow.filterCategory'
       - name: Upload SARIF file
