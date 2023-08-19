@@ -1,9 +1,9 @@
 name: Checkmarx Cx-Flow Scan
 on:
-  push:
-    branches:
-      - main
-      - master
+  # push:
+  #   branches:
+  #    - main
+  #    - master
 
   pull_request:
     types: [opened, reopened, synchronize] #Types specify which pull request events will trigger the workflow. For more events refer Github Actions documentation.
@@ -17,7 +17,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-    # Runs the Checkmarx Scan leveraging the latest version of CxFlow - REFER to Action README for list of inputs
+        # Runs the Checkmarx Scan leveraging the latest version of CxFlow - REFER to Action README for list of inputs
       - name: Checkmarx CxFlow Action
         uses: checkmarx-ts/checkmarx-cxflow-github-action@v1.9
         with:
@@ -36,8 +36,8 @@ jobs:
           sca_tenant: ${{ secrets.CXSCA_TENANT }}
           sca_username: ${{ secrets.CXSCA_USER }}
           sca_password: ${{ secrets.CXSCA_PWD }}
-          params: '--namespace=${{ github.repository_owner }} --repo-name=${{ github.event.repository.name }} --branch=${{ github.ref }} --merge-id=${{ github.event.number }} --logging.level.com.checkmarx.*=DEBUG --cx-flow.filterSeverity --cx-flow.filterCategory'
+          params: --namespace=${{ github.repository_owner }} --repo-name=${{ github.event.repository.name }} --branch=${{ github.ref }} --merge-id=${{ github.event.number }} --logging.level.com.checkmarx.*=DEBUG --cx-flow.filterSeverity --cx-flow.filterCategory
       - name: Upload SARIF file
         uses: github/codeql-action/upload-sarif@v2
         with:
-          sarif_file: cx.sarif
+          sarif_file: ./cx.sarif
