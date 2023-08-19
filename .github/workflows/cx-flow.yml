@@ -30,12 +30,12 @@ jobs:
           scanners: sast,sca
           break_build: false
           bug_tracker: GitHub
-          # sca_api_url: https://api-sca.checkmarx.net
-          # sca_app_url: https://sca.checkmarx.net
-          # sca_access_control_url: https://platform.checkmarx.net
-          # sca_tenant: sca-champions
-          # sca_username: afeferman
-          # sca_password: ${{ secrets.CXSCA_PWD }}
+          sca_api_url: https://api-sca.checkmarx.net
+          sca_app_url: https://sca.checkmarx.net
+          sca_access_control_url: https://platform.checkmarx.net
+          sca_tenant: sca-champions
+          sca_username: afeferman
+          sca_password: ${{ secrets.CXSCA_PWD }}
           params: '--namespace=${{ github.repository_owner }} --repo-name=${{ github.event.repository.name }} --branch=${{ github.ref }} --merge-id=${{ github.event.number }} --logging.level.com.checkmarx.*=DEBUG --cx-flow.filterSeverity --cx-flow.filterCategory'
       - name: Upload SARIF file
         uses: github/codeql-action/upload-sarif@v2
