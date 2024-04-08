@@ -34,6 +34,7 @@ public class Vulns {
 			sql = "select * from users where (email = '" + email + "' and password = '" + password + "')";
 			Statement statement = connection.createStatement();
 			ResultSet result = statement.executeQuery(sql);
+			
 
 			// clean sqli
 			// this is the right way to use a preparedstatement, which can be used incorrectly, also. :)
