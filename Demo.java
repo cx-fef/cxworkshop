@@ -5,6 +5,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class Demo {
+
+
     public static void main(String[] args) {
         String url = "http://example.com/api/data"; // Replace with your API endpoint URL
 
@@ -14,6 +16,7 @@ public class Demo {
 
             // Open a connection to the API endpoint
             HttpURLConnection connection = (HttpURLConnection) apiUrl.openConnection();
+
 
             // Set the request method to GET
             connection.setRequestMethod("GET");
@@ -51,4 +54,7 @@ public class Demo {
             e.printStackTrace();
         }
     }
+
+
+
 }
