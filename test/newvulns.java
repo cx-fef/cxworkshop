@@ -31,34 +31,6 @@ public class SendMessage extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)// /test/newvulns.java:34
-    throws ServletException, IOException {
-    response.setContentType("text/html;charset=UTF-8");
-    
-    try    {
-        PrintWriter out = response.getWriter();
-        Connection con = new DBConnect().connect(getServletContext().getRealPath("/WEB-INF/config.properties"));
-        String recipient = request.getParameter("recipient");
-        String subject = request.getParameter("subject");
-        String msg = request.getParameter("msg");
-        String sender = request.getParameter("sender");
-
-        if(con != null && !con.isClosed() && request.getParameter("send") != null)  {
-            
-            //sq lstatement resulting in SQLi
-            String sql = "INSERT into UserMessages(recipient, sender, subject, msg) values (?,?,?,?)";
-
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, recipient);
-            preparedStatement.setString(2, sender);
-            preparedStatement.setString(3, subject);
-            preparedStatement.setString(4, msg);
-
-            ResultSet resultSet = preparedStatement.executeQuery();
-        }
-    }
-
-    /*
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -87,7 +59,6 @@ public class SendMessage extends HttpServlet {
             response.sendRedirect(request.getContextPath()+"/vulnerability/SendMessage.jsp?status=<b style='color:red'>* Something Went Wrong</b><br/>"+ex);
         }                 
     }
-    */
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
