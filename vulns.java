@@ -36,6 +36,7 @@ public class Vulns {
 			
 
 			// vulnerable SQLi
+
 			// this is what building a sql statement inline is like
 			sql = "select * from users where (email = '" + email + "' and password = '" + password + "')";
 			Statement statement = connection.createStatement();
@@ -43,7 +44,7 @@ public class Vulns {
 
 			// clean sqli
 			// this is the right way to use a preparedstatement, which can be used incorrectly, also. :)
-/*
+/*			
 			sql = "select * from users where email = ? and password = ? ";
 			PreparedStatement ps = connection.prepareStatement(sql);
 			ps.setString(1, email);
