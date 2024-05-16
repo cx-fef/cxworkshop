@@ -32,20 +32,17 @@ public class Vulns {
 			String password = request.getParameter ("password");
 			// get a connection to the sql server
 			Connection connection = pool.getConnection();
-			String sql = "";
-			
 
 			// vulnerable SQLi
-
-			// this is what building a sql statement inline is like
-			sql = "select * from users where (email = '" + email + "' and password = '" + password + "')";
+			// this is what building an inline sql statement looks like
+			String sql = "select * from users where (email = '" + email + "' and password = '" + password + "')";
 			Statement statement = connection.createStatement();
 			ResultSet result = statement.executeQuery(sql);
 
 			// clean sqli
 			// this is the right way to use a preparedstatement, which can be used incorrectly, also. :)
 /*			
-			sql = "select * from users where email = ? and password = ? ";
+			String sql = "select * from users where email = ? and password = ? ";
 			PreparedStatement ps = connection.prepareStatement(sql);
 			ps.setString(1, email);
 			ps.setString(2, password);
