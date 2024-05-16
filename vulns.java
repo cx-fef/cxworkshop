@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import java.io.PrintWriter;
 import com.google.common.html.HtmlEscapers;
@@ -35,19 +36,21 @@ public class Vulns {
 			Connection connection = pool.getConnection();
 
 			// this is what building a sql statement inline is like
+			/*
 			String sql = "select * from users where (email = '" + email + "' and password = '" + password + "')";
 			Statement statement = connection.createStatement();
 			ResultSet rs = statement.executeQuery(sql);
+			*/
 
       		// clean sqli
 			// this is the right way to use a preparedstatement, which can be used incorrectly, also. :)
-			/*
+			
 			String sql = "select * from users where email = ? and password = ? ";
 			PreparedStatement ps = connection.prepareStatement(sql);
 			ps.setString(1, email);
 			ps.setString(2, password);
-			ResultSet result = ps.executeQuery();
-			*/
+			ResultSet rs = ps.executeQuery();
+			
 			if (rs.next()) {
 				loggedIn = true;
 				doGet(rs,req,response);
@@ -61,7 +64,7 @@ public class Vulns {
 	}
 
 	// fake cleansing function
-	protected static string myCleanXSS(string taintedString)	{
+	protected static String myCleanXSS(String taintedString)	{
 		try	{
 			String cleanedString;
 			// do some stuff to the taintedString to clean it
