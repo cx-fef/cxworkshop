@@ -1,7 +1,7 @@
 import java.sql.Connection;
-import java.sql.DatabaseMetaData;
+//import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+//import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,10 +18,10 @@ import com.itextpdf.text.pdf.PdfWriter;
 
 public class Vulns {
 
-	private boolean loggedIn = false;
-	private Result result;
-	private HttpServletResponse response;
-	private HttpServletRequest req;
+	private static boolean loggedIn = false;
+	private static Result result;
+	private static HttpServletResponse response;
+	private static HttpServletRequest req;
 
 	// SQLi vulnerability
 	public static void input (DataSource pool) {
@@ -32,22 +32,20 @@ public class Vulns {
 			String password = request.getParameter ("password");
 			// get a connection to the sql server
 			Connection connection = pool.getConnection();
-	
-			// vulnerable SQLi
+
 			// this is what building a sql statement inline is like
 			String sql = "select * from users where (email = '" + email + "' and password = '" + password + "')";
 			Statement statement = connection.createStatement();
 			ResultSet result = statement.executeQuery(sql);
 
-			// clean sqli
+      // clean sqli
 			// this is the right way to use a preparedstatement, which can be used incorrectly, also. :)
-/*
 			String sql = "select * from users where email = ? and password = ? ";
 			PreparedStatement ps = connection.prepareStatement(sql);
 			ps.setString(1, email);
 			ps.setString(2, password);
 			result = ps.executeQuery();
-*/			
+			
 			if (result.next()) {
 				loggedIn = true;
 				doGet(result,req,response);
@@ -74,7 +72,7 @@ public class Vulns {
 	}
 	
 	// XSS vulnerability	
-	protected void doGet(Result res, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected static void doGet(Result res, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     
     		try {
 			response.setContentType("text/html;charset=UTF-8");
