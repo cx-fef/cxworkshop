@@ -1,7 +1,8 @@
 import java.sql.Connection;
-//import java.sql.DatabaseMetaData;
+import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
-//import java.sql.ResultSet;
+import java.sql.Statement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,27 +29,28 @@ public class Vulns {
 		try {
 
 			// get the email and password from the request parameters
-			String email = request.getParameter ("email");
-			String password = request.getParameter ("password");
+			String email = req.getParameter ("email");
+			String password = req.getParameter ("password");
 			// get a connection to the sql server
 			Connection connection = pool.getConnection();
 
 			// this is what building a sql statement inline is like
 			String sql = "select * from users where (email = '" + email + "' and password = '" + password + "')";
 			Statement statement = connection.createStatement();
-			ResultSet result = statement.executeQuery(sql);
+			ResultSet rs = statement.executeQuery(sql);
 
-      // clean sqli
+      		// clean sqli
 			// this is the right way to use a preparedstatement, which can be used incorrectly, also. :)
+			/*
 			String sql = "select * from users where email = ? and password = ? ";
 			PreparedStatement ps = connection.prepareStatement(sql);
 			ps.setString(1, email);
 			ps.setString(2, password);
-			result = ps.executeQuery();
-			
-			if (result.next()) {
+			ResultSet result = ps.executeQuery();
+			*/
+			if (rs.next()) {
 				loggedIn = true;
-				doGet(result,req,response);
+				doGet(rs,req,response);
 			} else
 				out.println("No results");
 		
@@ -59,9 +61,9 @@ public class Vulns {
 	}
 
 	// fake cleansing function
-	protected string myCleanXSS(string taintedString)	{
+	protected static string myCleanXSS(string taintedString)	{
 		try	{
-			string cleanedString;
+			String cleanedString;
 			// do some stuff to the taintedString to clean it
 			cleanedString = taintedString;
 			return cleanedString;
@@ -72,7 +74,7 @@ public class Vulns {
 	}
 	
 	// XSS vulnerability	
-	protected static void doGet(Result res, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected static void doGet(ResultSet res, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     
     		try {
 			response.setContentType("text/html;charset=UTF-8");
@@ -101,7 +103,7 @@ public class Vulns {
 		}
 	}
 
-	public void logRequest(HttpServletRequest request) {
+	public static void logRequest(HttpServletRequest request) {
 		Logger logger = Logger.getLogger("HttpRequestLogger");
 		FileHandler fh;
 	
@@ -129,7 +131,7 @@ public class Vulns {
 
 	// ...
 
-	public void exportToPDF(HttpServletRequest request) {
+	public static void exportToPDF(HttpServletRequest request) {
 		try {
 			// Create a new Document
 			Document document = new Document();
