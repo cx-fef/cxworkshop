@@ -32,43 +32,34 @@ public class SendMessage extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        
-        try    {
-            PrintWriter out = response.getWriter();
-            Connection con=new DBConnect().connect(getServletContext().getRealPath("/WEB-INF/config.properties"));
-            String recipient=request.getParameter("recipient");
-            String subject=request.getParameter("subject");
-            String msg=request.getParameter("msg");
-            String sender=request.getParameter("sender");
-            if(con!=null && !con.isClosed() && request.getParameter("send")!=null)  {
-                // the work below between the two choices is designed to demonstrate broken code being fixed...and recognized by checkmarx
-                //PreparedStatement to Prevent SQL Injection attack:   
-                /*    
-                PreparedStatement pstmt=con.prepareStatement("INSERT into UserMessages(recipient, sender, subject, msg) values (?,?,?,?)");
-                pstmt.setString(1, recipient);
-                pstmt.setString(2, sender);
-                pstmt.setString(3, subject);
-                pstmt.setString(4, msg);
-                pstmt.executeUpdate();
-                */
-               
-                // sql statement resulting in SQLi
-                String sql = "INSERT into UserMessages(recipient, sender, subject, msg) values ("+recipient+","+sender+","+subject+","+msg+")";
-			    Statement statement = connection.createStatement();
-			    ResultSet result = statement.executeQuery(sql);
+        throws ServletException, IOException {
+    response.setContentType("text/html;charset=UTF-8");
 
-                response.sendRedirect(request.getContextPath()+"/vulnerability/SendMessage.jsp?status=<b style='color:green'>* Message successfully sent *</b>");
+        try {
+            PrintWriter out = response.getWriter();
+            Connection con = new DBConnect().connect(getServletContext().getRealPath("/WEB-INF/config.properties"));
+            String recipient = request.getParameter("recipient");
+            String subject = request.getParameter("subject");
+            String msg = request.getParameter("msg");
+            String sender = request.getParameter("sender");
+            if(con != null && !con.isClosed() && request.getParameter("send") != null)  {
+                String sql = "INSERT INTO UserMessages(recipient, sender, subject, msg) VALUES (?, ?, ?, ?)";
+                
+                PreparedStatement preparedStatement = con.prepareStatement(sql);
+
+                preparedStatement.setString(1, recipient)
+                preparedStatement.setString(2, sender);
+                preparedStatement.setString(3, subject);
+                preparedStatement.setString(4, msg);
+
+                ResultSet result = preparedStatement.executeQuery();
+                // method continues ...
             }
-            else    {
-                response.sendRedirect(request.getContextPath()+"/vulnerability/SendMessage.jsp?status=<b style='color:red'>* Something Went Wrong</b>");
-            }
+        } catch(SQLException e) {
+            // error handling
         }
-        catch(Exception ex) {
-            response.sendRedirect(request.getContextPath()+"/vulnerability/SendMessage.jsp?status=<b style='color:red'>* Something Went Wrong</b><br/>"+ex);
-        }                 
     }
+
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
