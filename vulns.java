@@ -39,21 +39,11 @@ public class Vulns {
 			Statement statement = connection.createStatement();
 			ResultSet rs = statement.executeQuery(sql);
 
-      		// clean sqli
-			// this is the right way to use a preparedstatement, which can be used incorrectly, also. :)
-			/*
-			String sql = "select * from users where email = ? and password = ? ";
-			PreparedStatement ps = connection.prepareStatement(sql);
-			ps.setString(1, email);
-			ps.setString(2, password);
-			ResultSet result = ps.executeQuery();
-			*/
 			if (rs.next()) {
 				loggedIn = true;
 				doGet(rs,req,response);
 			} else
-				out.println("No results");
-		
+				out.println("No results");		
 		}
 		catch(SQLException ex)	{
 			out.println("Overly broad Exception " + ex.Message());
