@@ -51,7 +51,7 @@ public class Vulns {
 	}
 
 	// fake cleansing function
-	protected static string myCleanXSS(string taintedString)	{
+	protected static String myCleanXSS(String taintedString)	{
 		try	{
 			String cleanedString;
 			// do some stuff to the taintedString to clean it
